@@ -10,12 +10,16 @@
 body {
   font-family: Arial, sans-serif;
   background: #f3f3f3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
 }
 
 .container {
   position: relative;
   width: 80%;
-  margin: 50px auto;
+  margin: 40px auto;
 }
 
 .wrapper {
@@ -39,7 +43,7 @@ body {
 .input,
 .button {
   position: relative;
-  height: 45px;
+  height: 40px;
   padding: 0 20px;
 }
 
@@ -56,6 +60,10 @@ body {
 
 .button-blue {
   background: royalblue;
+}
+
+.button-red {
+  background: red;
 }
 
 .content {
@@ -103,6 +111,7 @@ body {
 
 .box h6 {
   font-size: 1rem;
+  margin-bottom: 10px;
 }
 
 /* mobile or table screen */

@@ -9,16 +9,18 @@ window.addEventListener('DOMContentLoaded', () => {
   
   function addItem(event) {
     event.preventDefault();
-    const value = input.value.trim();
-    const data = {value: value};
-    if (validate(value)) {
-      if (isItemExist(value)) return alerts('error', 'Name Tag is already exist!');
-      items.unshift(data);
-      setLocalstorage('item', items);
-      showElement(data);
-      alerts('success', 'Item has been added!');
-      showData();
-      clear();
+    if (event.target.dataset.type.toLowerCase().includes('add')) {
+      const value = input.value.trim();
+      const data = {value: value};
+      if (validate(value)) {
+        if (isItemExist(value)) return alerts('error', 'Name Tag is already exist!');
+        items.unshift(data);
+        setLocalstorage('item', items);
+        showElement(data);
+        alerts('success', 'Item has been added!');
+        showData();
+        clear();
+      }
     }
   }
   
@@ -62,6 +64,10 @@ window.addEventListener('DOMContentLoaded', () => {
           <span class="close-button button-delete" data-index="${index}">×</span>
           <h3>Hi, my name is</h3>
           <h6>${data.value}</h6>
+          <div class="button-wrapper">
+            <button class="button button-blue button-edit" data-index="${index}">Edit</button>
+            <button class="button button-red button-delete" data-index="${index}">Delete</button>
+          </div>
         </div>
       </div>
     `;
@@ -100,6 +106,35 @@ window.addEventListener('DOMContentLoaded', () => {
         setLocalstorage('item', items);
         alerts('success', 'Item has been deleted!');
         showData();
+      }
+    });
+  }
+  
+  window.addEventListener('click', event => {
+    if (event.target.classList.contains('button-edit')) {
+      buttonSubmit.setAttribute('data-type', 'edit');
+      const index = event.target.dataset.index;
+      input.value = items[index].value;
+      editItem(index);
+    }
+  });
+  
+  function editItem(index) {
+    buttonSubmit.addEventListener('click', function(event) {
+      event.preventDefault();
+      if (this.dataset.type.toLowerCase().includes('edit')) {
+        const value = input.value.trim();
+        const data = {value: value};
+        if (validate(value)) {
+        if (isItemExist(value)) return alerts('error', 'Name Tag is already exist!');
+          items[index].value = value;
+          setLocalstorage('item', items);
+          alerts('success', 'Item has been updated!');
+          showData();
+          this.setAttribute('data-type', 'add');
+          index = null;
+          clear();
+        }
       }
     });
   }
