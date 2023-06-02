@@ -16,7 +16,6 @@ window.addEventListener('DOMContentLoaded', () => {
         if (isItemExist(value)) return alerts('error', 'Name Tag is already exist!');
         items.unshift(data);
         setLocalstorage('item', items);
-        showElement(data);
         alerts('success', 'Item has been added!');
         showData();
         clear();
@@ -43,7 +42,7 @@ window.addEventListener('DOMContentLoaded', () => {
     localStorage.setItem(name, JSON.stringify(value));
   }
   
-  function showElement(data, index = 0) {
+  function showElement(data, index) {
     const result = renderElement(data, index);
     content.insertAdjacentHTML('beforeend', result);
   }
@@ -131,9 +130,9 @@ window.addEventListener('DOMContentLoaded', () => {
           setLocalstorage('item', items);
           alerts('success', 'Item has been updated!');
           showData();
+          clear();
           this.setAttribute('data-type', 'add');
           index = null;
-          clear();
         }
       }
     });
